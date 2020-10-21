@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using Spire.Email;
+using Spire.Email.Pop3;
+using System.Globalization;
+using System.Reflection;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        { 
+            Spire.Email.Pop3.Pop3Client pop = new Spire.Email.Pop3.Pop3Client();  
+            pop.Host = "pop.gmail.com";
+            pop.Username = "gproyecto968@gmail.com";
+            pop.Password = "proyectonuevo";
+            pop.Port = 995;
+            pop.EnableSsl = true;  
+            pop.Connect();  
+            MailMessage message = pop.GetMessage(1);  
+            Console.WriteLine("From : " + message.From.ToString()); 
+            Console.WriteLine("To : " + message.To.ToString());
+            Console.WriteLine("Date : " + message.Date.ToString(CultureInfo.InvariantCulture));
+            Console.WriteLine("Subject: " + message.Subject);
+            Console.WriteLine("Body:" + message.BodyText);
+            message.Save(message.Subject + ".eml", MailMessageFormat.Eml);
+        }
+    }
+}
